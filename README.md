@@ -1,12 +1,19 @@
-# Welcome to your new ignited app!
+# Welcome to HostIT
+## Overview
 
-[![CircleCI](https://circleci.com/gh/infinitered/ignite.svg?style=svg)](https://circleci.com/gh/infinitered/ignite)
+Welcome to **HostIT**, a robust web3 event ticketing application with integrated Proof of Attendance Protocol (POAP) functionality. HostIT allows users to register for events, purchase tickets, and receive digital badges as proof of their attendance. 
 
-## The latest and greatest boilerplate for Infinite Red opinions
+## Features
 
-This is the boilerplate that [Infinite Red](https://infinite.red) uses as a way to test bleeding-edge changes to our React Native stack.
+- **User Registration and Authentication**: Users can register using decentralized identity solutions such as MetaMask or WalletConnect
+- **Event Creation and Ticketing**: Event organizers can create events, set ticket prices, and manage ticket sales. IUsers can buy tickets using cryptocurrency.
+- **Attendance Verification**: Attendance verification mechanisms for attendees' participation in events, (QR code scanning or check-in procedures)
+- **POAP Integration**: Integration with POA protocol to issue digital badges to attendees upon event attendance
+- **Social Sharing**: Users can share their earned POAP badges on social media platforms directly from our application.
+- **Analytics and Insights**: Event organizers are provided with insights into attendees' participation and engagement.
 
-Currently includes:
+
+This project Currently includes:
 
 - React Native
 - React Navigation
@@ -16,10 +23,14 @@ Currently includes:
 
 ## Quick Start
 
-The Ignite boilerplate project's structure will look similar to this:
+1. Clone this repo 
+2. run "yarn"
+3. run "npx expo start" to start the local server
+
+For this project's file architecture look below:
 
 ```
-ignite-project
+Check-out
 ├── app
 │   ├── components
 │   ├── config
@@ -28,12 +39,14 @@ ignite-project
 │   ├── navigators
 │   ├── screens
 │   ├── services
+|   ├── styles
 │   ├── theme
 │   ├── utils
 │   └── app.tsx
 ├── assets
 │   ├── icons
 │   └── images
+├── plugins
 ├── test
 │   ├── __snapshots__
 │   ├── mockFile.ts
@@ -48,14 +61,6 @@ ignite-project
 │   ├── gradlew.bat
 │   ├── keystores
 │   └── settings.gradle
-├── ignite
-│   └── templates
-|       |── app-icon
-│       ├── component
-│       ├── model
-│       ├── navigator
-│       └── screen
-├── index.js
 ├── ios
 │   ├── IgniteProject
 │   ├── IgniteProject-tvOS
@@ -88,16 +93,16 @@ app
 ```
 
 **components**
-This is where your reusable components live which help you build your screens.
+This is where your reusable components live.
 
 **i18n**
-This is where your translations will live if you are using `react-native-i18n`.
+This is where translations live  `react-native-i18n`.
 
 **models**
-This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc.
+This is where app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc.
 
 **navigators**
-This is where your `react-navigation` navigators will live.
+This is where `react-navigation` navigators will live.
 
 **screens**
 This is where your screen components will live. A screen is a React component which will take up the entire screen and be part of the navigation hierarchy. Each screen will have a directory containing the `.tsx` file, along with any assets or other helper files.
@@ -109,7 +114,7 @@ Any services that interface with the outside world will live here (think REST AP
 Here lives the theme for your application, including spacing, colors, and typography.
 
 **utils**
-This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truly shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
+This is a place miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. 
 
 **app.tsx** This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
@@ -123,42 +128,7 @@ assets
 └── images
 ```
 
-**icons**
-This is where your icon assets will live. These icons can be used for buttons, navigation elements, or any other UI components. The recommended format for icons is PNG, but other formats can be used as well.
-
-Ignite comes with a built-in `Icon` component. You can find detailed usage instructions in the [docs](https://github.com/infinitered/ignite/blob/master/docs/Components-Icon.md).
-
-**images**
-This is where your images will live, such as background images, logos, or any other graphics. You can use various formats such as PNG, JPEG, or GIF for your images.
-
-Another valuable built-in component within Ignite is the `AutoImage` component. You can find detailed usage instructions in the [docs](https://github.com/infinitered/ignite/blob/master/docs/Components-AutoImage.md).
-
-How to use your `icon` or `image` assets:
-
-```
-import { Image } from 'react-native';
-
-const MyComponent = () => {
-  return (
-    <Image source={require('../assets/images/my_image.png')} />
-  );
-};
-```
-
-### ./ignite directory
-
-The `ignite` directory stores all things Ignite, including CLI and boilerplate items. Here you will find templates you can customize to help you get started with React Native.
 
 ### ./test directory
 
-This directory will hold your Jest configs and mocks.
-
-## Running Maestro end-to-end tests
-
-Follow our [Maestro Setup](https://ignitecookbook.com/docs/recipes/MaestroSetup) recipe from the [Ignite Cookbook](https://ignitecookbook.com/)!
-
-## Previous Boilerplates
-
-- [2018 aka Bowser](https://github.com/infinitered/ignite-bowser)
-- [2017 aka Andross](https://github.com/infinitered/ignite-andross)
-- [2016 aka Ignite 1.0](https://github.com/infinitered/ignite-ir-boilerplate-2016)
+This directory holds Jest configs and mocks.
