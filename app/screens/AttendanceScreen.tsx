@@ -2,7 +2,7 @@ import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
-import { Screen, Text } from "app/components"
+import { AppCarousel, AppHeader, Screen, Text } from "app/components"
 import { screenContentContainer } from "app/styles/mainStyle"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "app/models"
@@ -17,6 +17,8 @@ export const AttendanceScreen: FC<AttendanceScreenProps> = observer(function Att
   // const navigation = useNavigation()
   return (
     <Screen style={$root} preset="scroll" contentContainerStyle={screenContentContainer}>
+      <AppHeader pageTitle={false} />
+      <AppCarousel />
       <Text text="attendance" />
     </Screen>
   )

@@ -39,7 +39,7 @@ export const ScreenNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "",
           tabBarIcon: ({ focused }) => (
             <Icon icon="home" color={focused ? colors.tint : ""} size={24} />
           ),
@@ -49,7 +49,7 @@ export const ScreenNavigator = () => {
         name="Scan"
         component={ScanScreen}
         options={{
-          tabBarLabel: "Scan",
+          tabBarLabel: "",
           tabBarIcon: ({ focused }) => (
             <Icon icon="scan" color={focused ? colors.tint : ""} size={24} />
           ),
@@ -59,7 +59,7 @@ export const ScreenNavigator = () => {
         name="Analytics"
         component={AnalyticsScreen}
         options={{
-          tabBarLabel: "Analytics",
+          tabBarLabel: "",
           tabBarIcon: ({ focused }) => (
             <Icon icon="analytics" color={focused ? colors.tint : ""} size={24} />
           ),
@@ -69,7 +69,7 @@ export const ScreenNavigator = () => {
         name="Attendance"
         component={AttendanceScreen}
         options={{
-          tabBarLabel: "Attendance",
+          tabBarLabel: "",
           tabBarIcon: ({ focused }) => (
             <Icon icon="attendance" color={focused ? colors.tint : ""} size={24} />
           ),

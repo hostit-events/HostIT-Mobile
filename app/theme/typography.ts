@@ -2,13 +2,12 @@
 // markdown file and add links from here
 
 import { Platform } from "react-native"
-import {
-  SpaceGrotesk_300Light as spaceGroteskLight,
-  SpaceGrotesk_400Regular as spaceGroteskRegular,
-  SpaceGrotesk_500Medium as spaceGroteskMedium,
-  SpaceGrotesk_600SemiBold as spaceGroteskSemiBold,
-  SpaceGrotesk_700Bold as spaceGroteskBold,
-} from "@expo-google-fonts/space-grotesk"
+const spaceGroteskLight = require("../../assets/fonts/PoppinsLight.ttf")
+const spaceGroteskRegular = require("../../assets/fonts/PoppinsRegular.ttf")
+const spaceGroteskMedium = require("../../assets/fonts/PoppinsMedium.ttf")
+const spaceGroteskSemiBold = require("../../assets/fonts/PoppinsSemiBold.ttf")
+const spaceGroteskBold = require("../../assets/fonts/PoppinsBold.ttf")
+
 
 export const customFontsToLoad = {
   spaceGroteskLight,
