@@ -108,6 +108,17 @@ export const iconRegistry = {
   person4: require("../../assets/icons/person4.png"),
   person5: require("../../assets/icons/person5.png"),
   emptyImage: require("../../assets/icons/emptyImage.png"),
+  userName: require("../../assets/icons/userName.png"),
+  userEmail: require("../../assets/icons/userEmail.png"),
+  userCountry: require("../../assets/icons/userCountry.png"),
+  userOccupation: require("../../assets/icons/userOccupation.png"),
+  userPhone: require("../../assets/icons/userPhone.png"),
+  userX: require("../../assets/icons/userX.png"),
+  sponsor: require("../../assets/icons/sponsor.png"),
+  speakers: require("../../assets/icons/speakers.png"),
+  participants: require("../../assets/icons/participants.png"),
+  available: require("../../assets/icons/available.png"),
+  search: require("../../assets/icons/search.png"),
 }
 
 const $imageStyleBase: ImageStyle = {

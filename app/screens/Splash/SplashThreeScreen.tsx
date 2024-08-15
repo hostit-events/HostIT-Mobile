@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     fontWeight: "700",
-    color: colors.palette.secondary
+    color: colors.palette.secondary,
+    
   },
   buttonPressed: {
       backgroundColor: colors.palette.secondary,

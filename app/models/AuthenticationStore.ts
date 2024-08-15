@@ -5,7 +5,6 @@ export const AuthenticationStoreModel = types
   .props({
     authToken: types.maybe(types.string),
     authEmail: "",
-    authPhone: "",
   })
   .views((store) => ({
     get isAuthenticated() {
@@ -14,11 +13,6 @@ export const AuthenticationStoreModel = types
     get validationError() {
       if (store.authEmail.length === 0) return "can't be blank"
       if (store.authEmail.length < 6) return "must be at least 6 characters"
-      if (store.authPhone.length === 0) return "can't be blank"
-      if (store.authPhone.length < 9) return "must be at least 7 characters"
-      if (!/^(0|234|\+234)?[7-9][0-1]\d{8}$/.test(store.authPhone)) {
-        return "must be a valid Nigerian phone number";
-      }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(store.authEmail))
         return "must be a valid email address"
       return ""
@@ -30,9 +24,6 @@ export const AuthenticationStoreModel = types
     },
     setAuthEmail(value: string) {
       store.authEmail = value.replace(/ /g, "")
-    },
-    setAuthPhone(value: string) {
-      store.authPhone = value
     },
     logout() {
       store.authToken = undefined
