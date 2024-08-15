@@ -32,7 +32,7 @@ export const ScanModal = observer(function ScanModal(props: ScanModalProps) {
     >
       <View style={styles.overlay}>
         <View style={styles.container}>
-          {scanData?.email ? <AttendanceModal userDetails={scanData} handleMarkAttendance={handleMarkAttendance}/> : <NotAttendanceModal />}
+          {scanData?.message === "success" ? <AttendanceModal userDetails={scanData} handleMarkAttendance={handleMarkAttendance} /> : <NotAttendanceModal setShowModal={setShowModal}/>}
         </View>
       </View>
     </Modal>

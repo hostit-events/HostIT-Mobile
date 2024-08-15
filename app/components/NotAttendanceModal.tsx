@@ -13,6 +13,7 @@ export interface NotAttendanceModalProps {
    * An optional style override useful for padding & margin.
    */
   style?: StyleProp<ViewStyle>
+  setShowModal:  React.Dispatch<React.SetStateAction<boolean>>
 }
 
 /**
@@ -21,7 +22,7 @@ export interface NotAttendanceModalProps {
 export const NotAttendanceModal = observer(function NotAttendanceModal(
   props: NotAttendanceModalProps,
 ) {
-  const { style } = props
+  const { style, setShowModal } = props
   const $styles = [$container, style]
 
   return (
@@ -40,6 +41,7 @@ export const NotAttendanceModal = observer(function NotAttendanceModal(
             text="Retry"
             textStyle={styles.buttonText}
             style={styles.nextButton}
+            onPress={()=>{setShowModal(false)}}
           />
       </View>
     </View>

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
+import { ActivityIndicator, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera"
 import { Text } from "./Text"
@@ -7,12 +7,21 @@ import { Icon } from "./Icon"
 import { ScanModal } from "./ScanModal"
 import { colors } from "app/theme"
 import { Button } from "./Button"
+import { api } from "app/services/api"
 
 
-interface ScanData {
-  address: string
-  email: string
+const getUserDetails = async (email :any) => {
+  const userDetails = await api.apisauce.get(`api/attendance/${email}`);
+  console.log(userDetails.data)
+  return userDetails.data
 }
+
+const markAttendance = async (email :any) => {
+  const response = await api.apisauce.post(`api/attendance`, {email: email});
+  console.log(response.data)
+  return response.data
+}
+
 
 export interface ScanFirstTabProps {
   /**
@@ -27,23 +36,37 @@ export interface ScanFirstTabProps {
  */
 const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
   const [showModal, setShowModal] = React.useState(false)
-  const [scanData, setScanData] = React.useState<ScanData | null>(null)
+  const [scanData, setScanData] = React.useState<any>(null)
   const [facing, setFacing] = React.useState<CameraType>("back")
+  const [loading, setLoading] = React.useState<Boolean>(false)
 
-  const handleBarCodeScanned = ({ type, data }: any) => {
+  const handleBarCodeScanned = async({ type, data }: any) => {
     try {
+      setLoading(true)
       const parsedData = JSON.parse(data)
-      setScanData(parsedData)
+      const eachUserDetail = await getUserDetails(parsedData.email)
+      setLoading(false)
+      setScanData(eachUserDetail)
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
+      setLoading(false)
     }
     setShowModal(true)
     console.log(`type ${type}`)
     console.log(`data ${data}`)
   }
 
-  const handleMarkAttendance = () => {
-    setScanData(null)
+  const handleMarkAttendance = async(email: any) => {
+    try {
+      setLoading(true)
+      await markAttendance(email)
+      setLoading(false)
+      setShowModal(false)
+    } catch (error) {
+      console.error("Failed to parse scanned data:", error)
+      setLoading(false)
+
+    }
   }
 
   function toggleCameraFacing() {
@@ -68,6 +91,14 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
           onPress={requestPermission}
           text="Grant permission"
         />
+      </View>
+    )
+  }
+
+  if(loading){
+    return(
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color={colors.palette.secondary} />
       </View>
     )
   }
@@ -172,4 +203,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     color: colors.palette.secondary,
   },
+  loaderContainer: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }
 })
