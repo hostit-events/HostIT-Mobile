@@ -23,7 +23,6 @@ export interface AttendanceModalProps {
 export const AttendanceModal = observer(function AttendanceModal(props: AttendanceModalProps) {
   const { style, userDetails, handleMarkAttendance } = props
   const $styles = [$container, style]
-  const userData = userDetails.attendee[0]
 
   return (
     <View style={$styles}>
@@ -33,27 +32,27 @@ export const AttendanceModal = observer(function AttendanceModal(props: Attendan
           <View style={styles.detailsContainer}>
             <View style={styles.eachDetails}>
               <Icon icon="userName" size={24} />
-              <Text text={userData.name} style={styles.detailText} />
+              <Text text={userDetails.name} style={styles.detailText} />
             </View>
             <View style={styles.eachDetails}>
               <Icon icon="userEmail" size={24} />
-              <Text text={userData.email} style={styles.detailText}/>
+              <Text text={userDetails.email} style={styles.detailText}/>
             </View>
             <View style={styles.eachDetails}>
               <Icon icon="userPhone" size={24} />
-              <Text text={userData.phone} style={styles.detailText}/>
+              <Text text={userDetails.phone} style={styles.detailText}/>
             </View>
             <View style={styles.eachDetails}>
               <Icon icon="userOccupation" size={24} />
-              <Text text={userData.role} style={styles.detailText}/>
+              <Text text={userDetails.role} style={styles.detailText}/>
             </View>
             <View style={styles.eachDetails}>
               <Icon icon="userCountry" size={24} />
-              <Text text={userData.country} style={styles.detailText}/>
+              <Text text={userDetails.country} style={styles.detailText}/>
             </View>
             <View style={styles.eachDetails}>
               <Icon icon="userX" size={24} />
-              <Text text={userData.xhandle} style={styles.detailText}/>
+              <Text text={userDetails.xhandle} style={styles.detailText}/>
             </View>
           </View>
           <Button
@@ -61,10 +60,13 @@ export const AttendanceModal = observer(function AttendanceModal(props: Attendan
               backgroundColor: colors.palette.secondary,
               borderColor: colors.palette.secondary,
             }}
+            pressedTextStyle={{
+              color: colors.palette.primary
+            }}
             text="Checkin"
             textStyle={styles.buttonText}
             style={styles.nextButton}
-            onPress={()=>handleMarkAttendance(userData.email)}
+            onPress={()=>handleMarkAttendance(userDetails.email)}
           />
         </View>
       </View>

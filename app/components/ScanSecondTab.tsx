@@ -1,9 +1,9 @@
 import * as React from "react"
 import {
   ActivityIndicator,
-  ScrollView,
   StyleProp,
   StyleSheet,
+  ToastAndroid,
   View,
   ViewStyle,
 } from "react-native"
@@ -11,47 +11,16 @@ import { observer } from "mobx-react-lite"
 import { colors } from "app/theme"
 import { TextField } from "./TextField"
 import { Icon } from "./Icon"
-import { Row, Table } from "react-native-table-component"
-import { api, fetchApi } from "app/services/api"
+import { api } from "app/services/api"
 import { ScanModal } from "./ScanModal"
 import { TouchableOpacity } from "react-native"
-import { BaseModal } from "./BaseModal"
-import { Text } from "./Text"
-import { Button } from "./Button"
 
-const getUserDetails = async (email: any) => {
-  const userDetails = await api.apisauce.get(`api/attendance/${email}`)
-  console.log(userDetails.data)
-  return userDetails.data
-}
+import { useStores } from "app/models"
 
 const markAttendance = async (email: any) => {
   const response = await api.apisauce.post(`api/attendance`, { email: email })
   console.log(response.data)
   return response.data
-}
-
-const getAllAttendees = async () => {
-  try {
-    const response = await fetchApi.apisauce.get("api/general-registrations/");
-    
-    if (response.ok && response.data) {
-      const tableData = response.data;
-      const attendees = tableData.map((obj: { name: any; email: any; role: any }) => [
-        obj.name, 
-        obj.email, 
-        obj.role
-      ]);
-
-      return attendees; 
-    } else {
-      console.error('Error fetching data:', response.problem);
-      return []; 
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    return []; // Return an empty array in case of an error
-  }
 }
 
 export interface ScanSecondTabProps {
@@ -61,44 +30,38 @@ export interface ScanSecondTabProps {
   style?: StyleProp<ViewStyle>
 }
 
-/**
- * Describe your component here
- */
+
 const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps) {
   const [showModal, setShowModal] = React.useState(false)
   const [scanData, setScanData] = React.useState<any>(null)
   const [loading, setLoading] = React.useState<Boolean>(false)
-  const [tableHead] = React.useState(["Name", "Email", "Role"])
-  const [widthArr] = React.useState([160, 180, 140])
   const [userEmail, setUserEmail] = React.useState("")
-  const [tableData, setTableData] = React.useState([])
-  const [showCongratulations, setShowCongratulations] = React.useState(false)
 
+  const { AttendeesStore } = useStores()
 
-  React.useEffect( () => {
+  const attendees = AttendeesStore.allAttendees
 
-   const makeCall = async()=>{
-      const data = await getAllAttendees()
-      setTableData(data)
-    } 
-    makeCall()
-  }, [])
-  
   const handleGetUserDetails = async (email: string) => {
     try {
       setLoading(true)
-      console.log(email)
-      const eachUserDetail = await getUserDetails(email)
+      const eachUserDetail = attendees.find((item) => item.email === email)      
       console.log(eachUserDetail)
       setScanData(eachUserDetail)
-      setShowModal(true)
+      console.log(scanData)
+      if (eachUserDetail) {
+        setShowModal(true)
+      }
       setLoading(false)
-      
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
       setLoading(false)
     }
   }
+
+  function showToast() {
+    ToastAndroid.show('Registration Successful', ToastAndroid.SHORT);
+  }
+
 
   const handleMarkAttendance = async (email: any) => {
     try {
@@ -106,7 +69,7 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
       await markAttendance(email)
       setLoading(false)
       setShowModal(false)
-      setShowCongratulations(true)
+      showToast()
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
       setLoading(false)
@@ -147,7 +110,7 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
         </TouchableOpacity>
       </View>
 
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <ScrollView horizontal={true}>
           <View >
             <Table borderStyle={{ borderWidth: 1, borderColor: "#C1C0B9" }}  >
@@ -173,19 +136,14 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
             </ScrollView>
           </View>
         </ScrollView>
-      </View>
+      </View> */}
       <ScanModal
         showModal={showModal}
         setShowModal={setShowModal}
         scanData={scanData}
         handleMarkAttendance={handleMarkAttendance}
       />
-       <BaseModal modalVisible={showCongratulations} modalBody={<View>
-       <Text text={`You are number 1 to check in`} size="lg" />
-        <Button text="Scan next attendee" onPress={()=>{
-          setShowCongratulations(false)
-        }}/>
-      </View>} />
+      
     </>
   )
 })
@@ -234,7 +192,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row"
   },
-  scrollStyle:{
-    height: 450
-  }
+ 
 })

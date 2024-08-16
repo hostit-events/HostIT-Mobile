@@ -19,9 +19,6 @@ export const SplashThreeScreen: FC<SplashThreeScreenProps> = observer(function S
   // Pull in navigation via hook
   const { walkthroughStore } = useStores()
 
-  const skip = async () => {
-     walkthroughStore.setSeenWalkthrough(true)
-  }
   const next = () => {
     walkthroughStore.setSeenWalkthrough(true)
   }

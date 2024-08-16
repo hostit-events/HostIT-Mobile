@@ -23,7 +23,6 @@ const barData = [
     labelTextStyle: {color: 'gray'},
     frontColor: '#11EBF2',
   },
-  {value: 400, frontColor: '#ED6665'},
   {value: 100, frontColor: '#23ed56'},
   {
     value: 300,
@@ -33,7 +32,6 @@ const barData = [
     labelTextStyle: {color: 'gray'},
     frontColor: '#11EBF2',
   },
-  {value: 200, frontColor: '#ED6665'},
   {value: 100, frontColor: '#23ed56'},
 ]
 
@@ -68,25 +66,7 @@ const renderTitle = () => {
          Partcipants
         </Text>
       </View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <View
-          style={{
-            height: 12,
-            width: 12,
-            borderRadius: 6,
-            backgroundColor: '#ED6665',
-            marginRight: 8,
-          }}
-        />
-        <Text
-          style={{
-            width: 60,
-            height: 16,
-            color: 'lightgray',
-          }}>
-          Sponsors
-        </Text>
-      </View>
+    
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View
           style={{
@@ -119,17 +99,18 @@ export const AppBarChart = observer(function AppBarChart(props: AppBarChartProps
           backgroundColor: '#ffffff',
           paddingBottom: 10,
           borderRadius: 10,
+          width: "100%"
         }}>
         {renderTitle()}
         <BarChart
           data={barData}
           barWidth={40}
-          spacing={4}
+          spacing={20}
           xAxisThickness={1}
           yAxisThickness={0}
           yAxisTextStyle={{color: 'gray'}}
           noOfSections={4}
-          maxValue={2000}
+          maxValue={1500}
           rulesType="solid"
         />
       </View>

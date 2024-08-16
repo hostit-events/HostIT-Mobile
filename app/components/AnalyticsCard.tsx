@@ -1,9 +1,10 @@
 import * as React from "react"
-import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from "react-native"
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
-import { colors, spacing, typography } from "app/theme"
+import { colors, spacing} from "app/theme"
 import { Text } from "app/components/Text"
 import { Icon } from "./Icon"
+import { useStores } from "app/models"
 
 export interface AnalyticsCardProps {
   /**
@@ -16,6 +17,11 @@ export interface AnalyticsCardProps {
  * Describe your component here
  */
 export const AnalyticsCard = observer(function AnalyticsCard(props: AnalyticsCardProps) {
+  
+  const { AttendeesStore } = useStores()
+
+  const attendees = AttendeesStore.totalAttendees
+
   return (
     <View style={styles.sectionContainer}>
       <View style={styles.outerCardContainer}>
@@ -23,7 +29,7 @@ export const AnalyticsCard = observer(function AnalyticsCard(props: AnalyticsCar
           <View style={styles.innerContainer}>
           <Icon icon="sponsor" size={40} />
           <View style={styles.textContainer}>
-            <Text text="250" weight="bold" size="xxl" />
+            <Text text="20" weight="bold" size="xxl" />
             <Text text="Sponsors" weight="semiBold" style={styles.textStyle}/>
           </View>
           </View>
@@ -33,7 +39,7 @@ export const AnalyticsCard = observer(function AnalyticsCard(props: AnalyticsCar
 
           <Icon icon="speakers" size={40} />
           <View style={styles.textContainer}>
-            <Text text="100" weight="bold" size="xxl" />
+            <Text text="64" weight="bold" size="xxl" />
             <Text text="Speakers" weight="semiBold"  style={styles.textStyle}/>
           </View>
           </View>
@@ -45,7 +51,7 @@ export const AnalyticsCard = observer(function AnalyticsCard(props: AnalyticsCar
 
           <Icon icon="participants" size={40} />
           <View style={styles.textContainer}>
-            <Text text="900" weight="bold" size="xxl" />
+            <Text text={`${attendees}`} weight="bold" size="xxl" />
             <Text text="Participants" weight="semiBold"  style={styles.textStyle}/>
           </View>
           </View>
@@ -55,7 +61,7 @@ export const AnalyticsCard = observer(function AnalyticsCard(props: AnalyticsCar
 
           <Icon icon="available" size={40} />
           <View style={styles.textContainer}>
-            <Text text="250" weight="bold" size="xxl" />
+            <Text text={`${1500 - attendees}`} weight="bold" size="xxl" />
             <Text text="Available" weight="semiBold"  style={styles.textStyle}/>
           </View>
           </View>
@@ -69,6 +75,8 @@ const styles = StyleSheet.create({
   textContainer: {
     display: "flex",
     flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
   },
   cardContainer: {
     backgroundColor: colors.palette.neutral100,

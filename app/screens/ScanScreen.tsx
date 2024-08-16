@@ -21,7 +21,6 @@ interface ScanScreenProps extends AppStackScreenProps<"Scan"> {}
 
 export const ScanScreen: FC<ScanScreenProps> = observer(function ScanScreen() {
   // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
 
   const layout = useWindowDimensions()
 
@@ -84,7 +83,9 @@ const styles = StyleSheet.create({
     gap: 20
   },
   container: {
-    margin: spacing.md,
-    backgroundColor: "transparent"
+    marginHorizontal: spacing.md,
+    marginTop: spacing.md,
+    backgroundColor: "transparent",
+    height: 570
   }
 })

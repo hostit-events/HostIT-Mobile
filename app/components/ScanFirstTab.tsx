@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ActivityIndicator, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
+import { ActivityIndicator, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle, ToastAndroid } from "react-native"
 import { observer } from "mobx-react-lite"
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera"
 import { Text } from "./Text"
@@ -8,14 +8,7 @@ import { ScanModal } from "./ScanModal"
 import { colors } from "app/theme"
 import { Button } from "./Button"
 import { api } from "app/services/api"
-import { BaseModal } from "./BaseModal"
-
-
-const getUserDetails = async (email :any) => {
-  const userDetails = await api.apisauce.get(`api/attendance/${email}`);
-  console.log(userDetails.data)
-  return userDetails.data
-}
+import { useStores } from "app/models"
 
 const markAttendance = async (email :any) => {
   const response = await api.apisauce.post(`api/attendance`, {email: email});
@@ -37,18 +30,23 @@ export interface ScanFirstTabProps {
  */
 const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
   const [showModal, setShowModal] = React.useState(false)
-  const [showCongratulations, setShowCongratulations] = React.useState(false)
   const [scanData, setScanData] = React.useState<any>(null)
   const [facing, setFacing] = React.useState<CameraType>("back")
   const [loading, setLoading] = React.useState<Boolean>(false)
 
+  const { AttendeesStore } = useStores()
+
+  const attendees = AttendeesStore.allAttendees
+
+  // function to handle bar code scanning
   const handleBarCodeScanned = async({ type, data }: any) => {
     try {
       setLoading(true)
       const parsedData = JSON.parse(data)
-      const eachUserDetail = await getUserDetails(parsedData.email)
-      setLoading(false)
+      const eachUserDetail = attendees.find((item) => item.email === parsedData.email)
+      console.log(eachUserDetail)
       setScanData(eachUserDetail)
+      setLoading(false)
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
       setLoading(false)
@@ -57,6 +55,11 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
     console.log(`type ${type}`)
     console.log(`data ${data}`)
   }
+  
+  // function to show toast
+  function showToast() {
+    ToastAndroid.show('Registration Successful', ToastAndroid.SHORT);
+  }
 
   const handleMarkAttendance = async(email: any) => {
     try {
@@ -64,11 +67,11 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
       await markAttendance(email)
       setLoading(false)
       setShowModal(false)
-      setShowCongratulations(true)
+      setScanData(null)
+      showToast()
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
       setLoading(false)
-
     }
   }
 
@@ -130,12 +133,6 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
         </View>
       </View>
       <ScanModal showModal={showModal} setShowModal={setShowModal} scanData={scanData} handleMarkAttendance={handleMarkAttendance} />
-      <BaseModal modalVisible={showCongratulations} modalBody={<View>
-       <Text text={`You are number 1 to check in`} size="lg" />
-        <Button text="Scan next attendee" onPress={()=>{
-          setShowCongratulations(false)
-        }}/>
-      </View>} />
    </>
   )
 })

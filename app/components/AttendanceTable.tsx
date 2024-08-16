@@ -19,9 +19,9 @@ export const AttendanceTable = observer(function AttendanceTable(props: Attendan
   const [tableHead] = useState(['Ticket', 'Expected', 'Checkins', 'Pending']);
   const [tableTitle] = useState(['Participants', 'Sponsors', 'Speakers']);
   const [tableData] = useState([
-    ['900', '200', '700'],
-    ['250', '20', '230'],
-    ['100', '10', '90'],
+    ['-', '-', '-'],
+    ['-', '-', '-'],
+    ['-', '-', '-'],
   ]);
 
 
