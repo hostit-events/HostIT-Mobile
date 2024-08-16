@@ -1,13 +1,12 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { Image, StyleSheet, View, ViewStyle } from "react-native"
+import { StyleSheet, View, ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
-import { AppCarousel, AppHeader, Icon, Screen, Text } from "app/components"
+import { AppCarousel, AppHeader, HomeCarousel, Icon, Screen, Text } from "app/components"
 import { screenContentContainer } from "app/styles/mainStyle"
-import { useNavigation } from "@react-navigation/native"
 import { spacing } from "app/theme"
-const homeImage1 = require("../../assets/images/homePagePicture1.png")
 import MapView from 'react-native-maps';
+
 // import { useStores } from "app/models"
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
@@ -17,23 +16,20 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen() {
   // const { someStore, anotherStore } = useStores()
 
   // Pull in navigation via hook
-  const navigation = useNavigation()
   return (
     <Screen style={$root} preset="scroll" contentContainerStyle={screenContentContainer}>
       <AppHeader pageTitle />
       <AppCarousel />
-      <Image source={homeImage1} height={320} style={styles.image} />
-      <View style={styles.dotContainer}>
-        <Icon icon="dot" style={styles.dot} />
-        <Icon icon="dot" style={styles.dot} />
-        <Icon icon="dot" style={styles.dot} />
-      </View>
+      <HomeCarousel />
       <View style={styles.bottomContainer}>
         <View>
         <View style={styles.dateTime}>
           <Text text="5TH - 9TH September, 2024" size="xs" weight="semiBold" />
-          <Icon icon="dot" />
+          <View style={styles.dateTime}>
+
+          <Icon icon="dot" style={{marginBottom: 3}} />
           <Text text="09:00AM" size="xs" weight="semiBold"/>
+          </View>
         </View>
         <Text text="Web3 Lagos Conference" size="xl" weight="bold"/>
         <Text

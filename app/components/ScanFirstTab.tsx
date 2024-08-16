@@ -8,6 +8,7 @@ import { ScanModal } from "./ScanModal"
 import { colors } from "app/theme"
 import { Button } from "./Button"
 import { api } from "app/services/api"
+import { BaseModal } from "./BaseModal"
 
 
 const getUserDetails = async (email :any) => {
@@ -36,6 +37,7 @@ export interface ScanFirstTabProps {
  */
 const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
   const [showModal, setShowModal] = React.useState(false)
+  const [showCongratulations, setShowCongratulations] = React.useState(false)
   const [scanData, setScanData] = React.useState<any>(null)
   const [facing, setFacing] = React.useState<CameraType>("back")
   const [loading, setLoading] = React.useState<Boolean>(false)
@@ -62,6 +64,7 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
       await markAttendance(email)
       setLoading(false)
       setShowModal(false)
+      setShowCongratulations(true)
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
       setLoading(false)
@@ -97,7 +100,7 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
 
   if(loading){
     return(
-      <View style={styles.loaderContainer}>
+      <View >
         <ActivityIndicator size="large" color={colors.palette.secondary} />
       </View>
     )
@@ -127,6 +130,12 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
         </View>
       </View>
       <ScanModal showModal={showModal} setShowModal={setShowModal} scanData={scanData} handleMarkAttendance={handleMarkAttendance} />
+      <BaseModal modalVisible={showCongratulations} modalBody={<View>
+       <Text text={`You are number 1 to check in`} size="lg" />
+        <Button text="Scan next attendee" onPress={()=>{
+          setShowCongratulations(false)
+        }}/>
+      </View>} />
    </>
   )
 })

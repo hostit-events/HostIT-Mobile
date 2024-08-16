@@ -46,5 +46,26 @@ export class Api {
 
 }
 
+export class ApiW3B {
+  apisauce: ApisauceInstance
+  config: ApiConfig
+
+  /**
+   * Set up our API instance. Keep this lightweight!
+   */
+  constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
+    this.config = config
+    this.apisauce = create({
+      baseURL: "https://web3lagosbackend.onrender.com/",
+      timeout: this.config.timeout,
+      headers: {
+        Accept: "application/json",
+      },
+    })
+  }
+
+}
+
 // Singleton instance of the API for convenience
 export const api = new Api()
+export const fetchApi = new ApiW3B()

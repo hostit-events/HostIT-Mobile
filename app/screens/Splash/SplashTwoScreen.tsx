@@ -29,31 +29,37 @@ export const SplashTwoScreen: FC<SplashTwoScreenProps> = observer(function Splas
     <Screen preset="fixed" contentContainerStyle={styles.splashContainer}>
       <ImageBackground source={splashTwo} style={styles.background}>
         <ImageBackground source={overlay} style={styles.background}>
-        <View style={styles.container}>
-          <View style={styles.bottomView}>
-            <View style={styles.topContainer}>
-              <Text
-                text="Ready for the largest web3 event in Africa"
-                size="xxl"
-                weight="bold"
-                style={styles.textStyle}
-              />
-            </View>
-            <View style={styles.navigations}>
-              <View style={styles.sliderIcon}>
-                <View style={styles.activeSlide}></View>
-                <View style={styles.inactiveSlide}></View>
+          <View style={styles.container}>
+            <View style={styles.bottomView}>
+              <View style={styles.topContainer}>
+                <Text
+                  text="Ready for the largest web3 event in Africa"
+                  size="xxl"
+                  weight="semiBold"
+                  style={styles.textStyle}
+                />
               </View>
-              <Button
-                onPress={next}
-                pressedStyle={styles.buttonPressed}
-                text="Get Started"
-                textStyle={styles.buttonText}
-                style={styles.nextButton}
-              />
+              <View style={styles.navigations}>
+                <View style={styles.sliderIcon}>
+                  <View style={styles.activeSlide}></View>
+                  <View style={styles.inactiveSlide}></View>
+                </View>
+                <Button
+                  onPress={next}
+                  pressedStyle={{
+                    backgroundColor: colors.palette.secondary,
+                    borderColor: colors.palette.secondary,
+                  }}
+                  pressedTextStyle={{
+                    color: colors.palette.primary,
+                  }}
+                  text="Get Started"
+                  textStyle={styles.buttonText}
+                  style={styles.nextButton}
+                />
+              </View>
             </View>
           </View>
-        </View>
         </ImageBackground>
       </ImageBackground>
     </Screen>
@@ -81,12 +87,12 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     fontWeight: "700",
-    color: colors.palette.secondary
+    color: colors.palette.secondary,
   },
   buttonPressed: {
-      backgroundColor: colors.palette.secondary,
-      borderColor: colors.palette.secondary,
-      color: colors.palette.primary
+    backgroundColor: colors.palette.secondary,
+    borderColor: colors.palette.secondary,
+    color: colors.palette.primary,
   },
   container: {
     display: "flex",
@@ -124,7 +130,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 30,
     fontSize: 18,
-    fontWeight: 600
+    fontWeight: 600,
   },
   selectView: {
     marginBottom: 20,
@@ -159,7 +165,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: colors.palette.neutral100,
     textAlign: "left",
-    fontSize: 40
+    fontSize: 40,
   },
   title: {
     fontSize: 20,
@@ -172,6 +178,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 20,
     marginHorizontal: 20,
-    width: 300
+    width: 300,
   },
 })

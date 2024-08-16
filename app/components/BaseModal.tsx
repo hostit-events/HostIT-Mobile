@@ -40,7 +40,7 @@ export const BaseModal = observer(function BaseModal(props: BaseModalProps) {
           <ModalHeader>
             {modalHeader && (<HStack alignItems="center">
               <Heading size="sm" fontWeight="$semibold">
-                {modalHeader}
+                Congratulations!!!
               </Heading>
             </HStack>
             )}

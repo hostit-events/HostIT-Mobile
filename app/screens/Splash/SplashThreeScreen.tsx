@@ -32,7 +32,7 @@ export const SplashThreeScreen: FC<SplashThreeScreenProps> = observer(function S
           <View style={styles.container}>
             <View style={styles.bottomView}>
               <View style={styles.topContainer}>
-                <Text text="Experience seamless verification for your events" size="xxl" weight="bold" style={styles.textStyle} />
+                <Text text="Experience seamless verification for your events" size="xxl" weight="semiBold" style={styles.textStyle} />
               </View>
 
               <View style={styles.navigations}>
@@ -45,6 +45,9 @@ export const SplashThreeScreen: FC<SplashThreeScreenProps> = observer(function S
                   pressedStyle={{
                     backgroundColor: colors.palette.secondary,
                     borderColor: colors.palette.secondary,
+                  }}
+                  pressedTextStyle={{
+                    color: colors.palette.primary
                   }}
                   text="Get Started"
                   textStyle={styles.buttonText}

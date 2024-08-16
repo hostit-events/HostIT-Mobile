@@ -235,6 +235,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
 const $labelStyle: TextStyle = {
   marginBottom: spacing.xs,
+  color: colors.palette.neutral100
 }
 
 const $inputWrapperStyle: ViewStyle = {

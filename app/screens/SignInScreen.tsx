@@ -54,12 +54,13 @@ export const SignInScreen = observer(function SignInScreen() {
           </View>
           <View style={styles.inputGap}>
             <TextField
-            style={styles.textField}
+              style={styles.textField}
               value={email}
               onChangeText={(value) => setEmail(value)}
               label="Email"
               placeholder="Email"
               inputWrapperStyle={styles.inputWrapper}
+              containerStyle={{ borderWidth: 0 }}
             />
           </View>
           <View style={styles.inputGap}>
@@ -75,11 +76,23 @@ export const SignInScreen = observer(function SignInScreen() {
               RightAccessory={PasswordRightAccessory}
               placeholder="Enter password"
               inputWrapperStyle={styles.inputWrapper}
+              containerStyle={{ borderWidth: 0 }}
             />
           </View>
-        <Button text="Login" style={styles.btn} textStyle={styles.btnText} onPress={Login} />
+          <Button
+            text="Login"
+            style={styles.btn}
+            textStyle={styles.btnText}
+            pressedStyle={{
+              backgroundColor: colors.palette.secondary,
+              borderColor: colors.palette.secondary,
+            }}
+            pressedTextStyle={{
+              color: colors.palette.primary,
+            }}
+            onPress={Login}
+          />
         </View>
-      
       </ImageBackground>
     </Screen>
   )
@@ -110,13 +123,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 30,
     fontSize: 18,
-    fontWeight: 600
+    fontWeight: 600,
   },
 
   btnText: {
     fontSize: 20,
     fontWeight: "700",
-    color: colors.palette.secondary
+    color: colors.palette.secondary,
   },
 
   header: {
@@ -138,7 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 25,
   },
-  
+
   signInText: {
     color: "#667085",
     fontWeight: "400",
@@ -148,23 +161,23 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   splashContainer: {
     flex: 1,
   },
-  signInModal:{
+  signInModal: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    width:"80%",
+    width: "80%",
     marginHorizontal: "10%",
     backgroundColor: "#000107CC",
     padding: 12,
     paddingBottom: 40,
-    borderRadius: 6
+    borderRadius: 6,
   },
-  textField:{
+  textField: {
     backgroundColor: "#000107CC",
     borderColor: "#000107CC",
   },
@@ -172,11 +185,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#000107CC",
     borderWidth: 0,
     borderBottomWidth: 2,
-    borderBottomColor: colors.palette.neutral100
+    borderBottomColor: colors.palette.neutral100,
   },
-  text:{
+  text: {
     color: colors.palette.neutral100,
     textAlign: "left",
-    fontSize: 40
-  }
+    fontSize: 40,
+  },
 })

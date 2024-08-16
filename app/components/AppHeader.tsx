@@ -39,7 +39,7 @@ export const AppHeader = observer(function AppHeader(props: AppHeaderProps) {
         </Pressable>
         <View style={styles.TextArea}>
             <View style={styles.iconContainer}>
-              <Icon icon={"notification"} size={16} onPress={() => onNotificationPress()} />
+              <Icon icon={"notification"} onPress={() => onNotificationPress()} />
             </View>
         </View>
       </View>
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 12,
-    marginHorizontal: spacing.md
+    paddingBottom: 3,
+    marginHorizontal: spacing.md,
   },
   iconContainer: {
     alignItems: "center",
@@ -79,6 +80,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -8, height: 12 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    width: 50,
+    width: 40,
   },
 })
