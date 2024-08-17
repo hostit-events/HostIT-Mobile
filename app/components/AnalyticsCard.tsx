@@ -20,6 +20,8 @@ export const AnalyticsCard = observer(function AnalyticsCard(props: AnalyticsCar
   
   const { AttendeesStore } = useStores()
 
+  AttendeesStore.fetchAllAttendees
+
   const attendees = AttendeesStore.totalAttendees
 
   return (

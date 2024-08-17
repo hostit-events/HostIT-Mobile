@@ -6,6 +6,7 @@ import { AppCarousel, AppHeader, HomeCarousel, Icon, Screen, Text } from "app/co
 import { screenContentContainer } from "app/styles/mainStyle"
 import { spacing } from "app/theme"
 import MapView from 'react-native-maps';
+import { useStores } from "app/models"
 
 // import { useStores } from "app/models"
 
@@ -13,8 +14,8 @@ interface HomeScreenProps extends AppStackScreenProps<"Home"> {}
 
 export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen() {
   // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
-
+  const { AttendeesStore} = useStores()
+  const totalAttendees = AttendeesStore.totalAttendees
   // Pull in navigation via hook
   return (
     <Screen style={$root} preset="scroll" contentContainerStyle={screenContentContainer}>
@@ -24,38 +25,40 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen() {
       <View style={styles.bottomContainer}>
         <View>
         <View style={styles.dateTime}>
-          <Text text="5TH - 9TH September, 2024" size="xs" weight="semiBold" />
+          <Text text="5TH - 9TH September, 2024" size="xs" weight="semiBold" style={styles.text}/>
           <View style={styles.dateTime}>
 
           <Icon icon="dot" style={{marginBottom: 3}} />
-          <Text text="09:00AM" size="xs" weight="semiBold"/>
+          <Text text="09:00AM" size="xs" weight="semiBold" style={styles.text}/>
           </View>
         </View>
         <Text text="Web3 Lagos Conference" size="xl" weight="bold"/>
         <Text
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at arcu varius, suscipit leo ut, gravida tortor. Morbi nec arcu ex."
+          text="The Web3 Lagos Conference is the largest Web3 Event in Lagos, Nigeria. This conference will bring together Web3 enthusiasts from all over Nigeria and beyond."
           size="xs"
+          style={styles.text}
         />
         </View>
         <View style={styles.attendeesContainer}>
           <View style={styles.attendees}>
             <Icon icon="person1" size={30}/>
-            <Icon icon="person2" size={30}/>
-            <Icon icon="person3" size={30}/>
-            <Icon icon="person4" size={30}/>
-            <Icon icon="person5" size={30}/>
+            <Icon icon="person2" size={30} style={styles.leftShift} />
+            <Icon icon="person3" size={30} style={styles.leftShift} />
+            <Icon icon="person4" size={30} style={styles.leftShift} />
+            <Icon icon="person5" size={30} style={styles.leftShift} />
+            <Text text={`+${totalAttendees - 5}`} size="md" weight="semiBold"  style={styles.textBlack}/>
           </View>
           <View style={styles.participants}>
-            <Text text="Participants" size="md" weight="bold" />
-            <Text text="Across the globe" size="xs" />
+            <Text text="Participants" size="md" weight="bold"  style={styles.textBlack}/>
+            <Text text="Across the globe" size="xs" style={styles.text}/>
           </View>
         </View>
         <View style={styles.eventStats}>
-          <Text text="445+ Speakers" size="xs" weight="bold" />
+          <Text text="445+ Speakers" size="xs" weight="bold"  style={styles.textBlack}/>
           <Icon icon="dot" />
-          <Text text="20+ Sponsors" size="xs" weight="bold" />
+          <Text text="20+ Sponsors" size="xs" weight="bold"  style={styles.textBlack}/>
           <Icon icon="dot" />
-          <Text text="21+ Workshops" size="xs" weight="bold" />
+          <Text text="21+ Workshops" size="xs" weight="bold"  style={styles.textBlack}/>
         </View>
         <View style={styles.mapContainer}>
         <MapView style={styles.map} />
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
   attendees:{
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     gap: -20
   },
   participants:{
@@ -129,5 +133,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10
+  },
+  leftShift:{
+    marginLeft: -12
+  },
+  text:{
+    color:"#708090"
+  },
+  textBlack:{
+    color: "#000107"
   }
 })

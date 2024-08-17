@@ -48,9 +48,7 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
       console.log(eachUserDetail)
       setScanData(eachUserDetail)
       console.log(scanData)
-      if (eachUserDetail) {
-        setShowModal(true)
-      }
+      setShowModal(true)
       setLoading(false)
     } catch (error) {
       console.error("Failed to parse scanned data:", error)

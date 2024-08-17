@@ -2,6 +2,7 @@ import * as React from "react"
 import { StyleProp, Text, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import {BarChart} from 'react-native-gifted-charts';
+import { useStores } from "app/models";
 
 export interface AppBarChartProps {
   /**
@@ -14,26 +15,7 @@ export interface AppBarChartProps {
  * Describe your component here
  */
 
-const barData = [
-  {
-    value: 1000,
-    label: 'Awaiting Arrival',
-    spacing: 2,
-    labelWidth: 30,
-    labelTextStyle: {color: 'gray'},
-    frontColor: '#11EBF2',
-  },
-  {value: 100, frontColor: '#23ed56'},
-  {
-    value: 300,
-    label: 'Checkins',
-    spacing: 2,
-    labelWidth: 30,
-    labelTextStyle: {color: 'gray'},
-    frontColor: '#11EBF2',
-  },
-  {value: 100, frontColor: '#23ed56'},
-]
+
 
 
 const renderTitle = () => {
@@ -53,7 +35,7 @@ const renderTitle = () => {
             height: 12,
             width: 12,
             borderRadius: 6,
-            backgroundColor: '#11EBF2',
+            backgroundColor: '#6ce5e8',
             marginRight: 8,
           }}
         />
@@ -73,7 +55,7 @@ const renderTitle = () => {
             height: 12,
             width: 12,
             borderRadius: 6,
-            backgroundColor: '#23ed56',
+            backgroundColor: '#41b8d5',
             marginRight: 8,
           }}
         />
@@ -92,7 +74,39 @@ const renderTitle = () => {
 }
 
 export const AppBarChart = observer(function AppBarChart(props: AppBarChartProps) {
+  const { AttendeesStore} = useStores()
 
+  const totalAttendees = AttendeesStore.totalAttendees
+  const checkIns = AttendeesStore.totalFilteredData
+  const barData = [
+    {
+      value: totalAttendees,
+      label: 'Day 1',
+      spacing: 2,
+      labelWidth: 30,
+      labelTextStyle: {color: 'gray'},
+      frontColor: '#6ce5e8',
+    },
+    {value: checkIns, frontColor: '#41b8d5'},
+    {
+      value: totalAttendees,
+      label: 'Day 2',
+      spacing: 2,
+      labelWidth: 30,
+      labelTextStyle: {color: 'gray'},
+      frontColor: '#6ce5e8',
+    },
+    {value: 0, frontColor: '#41b8d5'},
+    {
+      value: totalAttendees,
+      label: 'Day 3',
+      spacing: 2,
+      labelWidth: 30,
+      labelTextStyle: {color: 'gray'},
+      frontColor: '#6ce5e8',
+    },
+    {value: 0, frontColor: '#41b8d5'},
+  ]
   return (
     <View
         style={{
@@ -105,7 +119,7 @@ export const AppBarChart = observer(function AppBarChart(props: AppBarChartProps
         <BarChart
           data={barData}
           barWidth={40}
-          spacing={20}
+          spacing={3}
           xAxisThickness={1}
           yAxisThickness={0}
           yAxisTextStyle={{color: 'gray'}}
