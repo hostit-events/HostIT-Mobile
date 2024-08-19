@@ -32,15 +32,11 @@
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/metro-runtime": "~3.2.3",
-    "@gluestack-style/react": "^1.0.57",
-    "@gluestack-ui/config": "^1.1.20",
-    "@gluestack-ui/themed": "^1.1.44",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-picker/picker": "^2.7.7",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.0.2",
-    "@shopify/flash-list": "1.6.4",
     "apisauce": "3.0.1",
     "date-fns": "^2.30.0",
     "expo": "~51.0.28",
@@ -63,7 +59,6 @@
     "react-native-drawer-layout": "^3.3.2",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-gifted-charts": "^1.4.29",
-    "react-native-maps": "1.14.0",
     "react-native-pager-view": "6.3.0",
     "react-native-reanimated": "~3.10.1",
     "react-native-reanimated-carousel": "^3.5.1",
@@ -73,8 +68,7 @@
     "react-native-svg": "15.2.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-table-component": "^1.2.2",
-    "react-native-web": "~0.19.6",
-    "twrnc": "^4.5.0"
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
