@@ -1,9 +1,7 @@
 {
   "name": "hostit-mobile",
-  "displayName": "hostit-mobile",
-  "expo": {
-    "name": "hostit-mobile",
-    "slug": "hostit-mobile",
+  "displayName": "hostit",
+    "slug": "hostit",
     "scheme": "hostit-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -78,8 +76,7 @@
     ],
     "experiments": {
       "tsconfigPaths": true
-    }
-  },
+    },
   "ignite": {
     "version": "9.7.2"
   }

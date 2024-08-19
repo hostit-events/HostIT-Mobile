@@ -45,7 +45,7 @@ const renderTitle = () => {
             height: 16,
             color: 'lightgray',
           }}>
-         Partcipants
+         Expected 
         </Text>
       </View>
     
@@ -65,7 +65,7 @@ const renderTitle = () => {
             height: 16,
             color: 'lightgray',
           }}>
-          Speakers
+          Check Ins
         </Text>
       </View>
     </View>

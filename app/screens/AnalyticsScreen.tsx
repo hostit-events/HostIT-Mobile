@@ -60,13 +60,7 @@ export const AnalyticsScreen: FC<AnalyticsScreenProps> = observer(function Analy
     <Screen style={$root} preset="scroll" contentContainerStyle={screenContentContainer}>
       <AppHeader pageTitle={false} />
       <AppCarousel />
-      <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-      />
+      <AttendanceTab />
     </Screen>
   )
 })

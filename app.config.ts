@@ -21,5 +21,11 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
       ...existingPlugins,
       require("./plugins/withSplashScreen").withSplashScreen,
     ],
+    extra: {
+      ...(config.extra ?? {}),
+      eas: {
+        projectId: "407d8c71-9a07-4ba1-99b8-2e3515962cc6",
+      },
+    },
   }
 }

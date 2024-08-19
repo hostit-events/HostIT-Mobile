@@ -3,6 +3,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import { observer } from 'mobx-react-lite';
 import { colors } from 'app/theme';
+import { useStores } from 'app/models';
 
 
 export interface AttendanceTableProps {
@@ -17,14 +18,21 @@ export interface AttendanceTableProps {
  */
 export const AttendanceTable = observer(function AttendanceTable(props: AttendanceTableProps) {
   const [tableHead] = useState(['Ticket', 'Expected', 'Checkins', 'Pending']);
-  const [tableTitle] = useState(['Participants', 'Sponsors', 'Speakers']);
-  const [tableData] = useState([
-    ['-', '-', '-'],
-    ['-', '-', '-'],
-    ['-', '-', '-'],
-  ]);
+  const [tableTitle] = useState(['Participants']);
+ 
 
+  const { AttendeesStore } = useStores()
 
+  AttendeesStore.fetchAllAttendees
+
+  const attendees = AttendeesStore.totalAttendees
+
+  const checkIn = AttendeesStore.totalFilteredData
+
+  const tableData = [
+    [attendees, checkIn, attendees - checkIn],
+  ]
+  
   return (
     <View style={styles.container}>
       <Table borderStyle={{borderWidth: 0}}>

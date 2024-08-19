@@ -31,7 +31,7 @@ export const AnalyticsCard = observer(function AnalyticsCard(props: AnalyticsCar
           <View style={styles.innerContainer}>
           <Icon icon="sponsor" size={40} />
           <View style={styles.textContainer}>
-            <Text text="20" weight="bold" size="xxl" />
+            <Text text="6+" weight="bold" size="xxl" />
             <Text text="Sponsors" weight="semiBold" style={styles.textStyle}/>
           </View>
           </View>
@@ -41,7 +41,7 @@ export const AnalyticsCard = observer(function AnalyticsCard(props: AnalyticsCar
 
           <Icon icon="speakers" size={40} />
           <View style={styles.textContainer}>
-            <Text text="64" weight="bold" size="xxl" />
+            <Text text="61+" weight="bold" size="xxl" />
             <Text text="Speakers" weight="semiBold"  style={styles.textStyle}/>
           </View>
           </View>

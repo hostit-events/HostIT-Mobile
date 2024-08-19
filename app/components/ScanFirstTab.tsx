@@ -1,5 +1,13 @@
 import * as React from "react"
-import { ActivityIndicator, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle, ToastAndroid } from "react-native"
+import {
+  ActivityIndicator,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+  ToastAndroid,
+} from "react-native"
 import { observer } from "mobx-react-lite"
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera"
 import { Text } from "./Text"
@@ -9,19 +17,19 @@ import { colors } from "app/theme"
 import { Button } from "./Button"
 import { api } from "app/services/api"
 import { useStores } from "app/models"
+import { Picker } from "@react-native-picker/picker"
 
-const markAttendance = async (email :any) => {
-  const response = await api.apisauce.post(`api/attendance`, {email: email});
+const markAttendance = async (email: string, day: number) => {
+  const response = await api.apisauce.post(`api/attendance/verify`, { email: email, day: day })
   console.log(response.data)
   return response.data
 }
-
 
 export interface ScanFirstTabProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  
+
   style?: StyleProp<ViewStyle>
 }
 
@@ -33,13 +41,14 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
   const [scanData, setScanData] = React.useState<any>(null)
   const [facing, setFacing] = React.useState<CameraType>("back")
   const [loading, setLoading] = React.useState<Boolean>(false)
+  const [day, setDay] = React.useState<number>(0)
 
   const { AttendeesStore } = useStores()
 
   const attendees = AttendeesStore.allAttendees
 
   // function to handle bar code scanning
-  const handleBarCodeScanned = async({ type, data }: any) => {
+  const handleBarCodeScanned = async ({ type, data }: any) => {
     try {
       setLoading(true)
       const parsedData = JSON.parse(data)
@@ -55,20 +64,20 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
     console.log(`type ${type}`)
     console.log(`data ${data}`)
   }
-  
+
   // function to show toast
-  function showToast() {
-    ToastAndroid.show('Registration Successful', ToastAndroid.SHORT);
+  function showToast(message: string) {
+    ToastAndroid.show(message, ToastAndroid.SHORT)
   }
 
-  const handleMarkAttendance = async(email: any) => {
+  const handleMarkAttendance = async (email: any) => {
     try {
       setLoading(true)
-      await markAttendance(email)
+      const response = await markAttendance(email, day)
       setLoading(false)
       setShowModal(false)
       setScanData(null)
-      showToast()
+      showToast(response.message)
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
       setLoading(false)
@@ -85,7 +94,6 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
     return <View />
   }
 
-
   if (!permission.granted) {
     // Camera permissions are not granted yet.
     return (
@@ -101,17 +109,34 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
     )
   }
 
-  if(loading){
-    return(
-      <View >
+  if (loading) {
+    return (
+      <View>
         <ActivityIndicator size="large" color={colors.palette.secondary} />
       </View>
     )
   }
 
   return (
-   <>
-   <View style={styles.ScanContainer}>
+    <>
+      <View style={styles.ScanContainer}>
+        <Picker
+          selectedValue={day}
+          style={{
+            height: 30,
+            width: "100%",
+            backgroundColor: "#fff",
+            borderColor: "#000",
+            marginTop: 20,
+            borderRadius: 10,
+          }}
+          onValueChange={(itemValue, itemIndex) => setDay(itemValue)}
+          aria-label="Day"
+        >
+          <Picker.Item label="Day 1" value={0} />
+          <Picker.Item label="Day 2" value={1} />
+          <Picker.Item label="Day 3" value={2} />
+        </Picker>
         <CameraView
           style={styles.camera}
           facing={facing}
@@ -127,25 +152,28 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
           </View>
         </CameraView>
         <View style={styles.ScanBuuttons}>
-          <Icon icon="imageBtn" size={40}/>
-          <Icon icon="retryBtn" size={40}/>
-          <Icon icon="flashBtn" size={40}/>
+          <Icon icon="imageBtn" size={40} />
+          <Icon icon="retryBtn" size={40} />
+          <Icon icon="flashBtn" size={40} />
         </View>
       </View>
-      <ScanModal showModal={showModal} setShowModal={setShowModal} scanData={scanData} handleMarkAttendance={handleMarkAttendance} />
-   </>
+      <ScanModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        scanData={scanData}
+        handleMarkAttendance={handleMarkAttendance}
+      />
+    </>
   )
 })
 
-export default React.memo(ScanFirstTab);
-
-
+export default React.memo(ScanFirstTab)
 
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
     paddingTop: 20,
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   message: {
     textAlign: "center",
@@ -155,7 +183,7 @@ const styles = StyleSheet.create({
   camera: {
     height: 350,
     width: 350,
-    marginVertical: 50,
+    marginVertical: 20,
   },
   buttonContainer: {
     flex: 1,
@@ -213,6 +241,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 })

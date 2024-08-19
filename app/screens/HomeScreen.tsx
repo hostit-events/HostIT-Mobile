@@ -32,9 +32,14 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen() {
           <Text text="09:00AM" size="xs" weight="semiBold" style={styles.text}/>
           </View>
         </View>
-        <Text text="Web3 Lagos Conference" size="xl" weight="bold"/>
+        <Text text="Web3 Lagos Conference" size="xl" weight="bold" style={{marginBottom: 10}} />
         <Text
           text="The Web3 Lagos Conference is the largest Web3 Event in Lagos, Nigeria. This conference will bring together Web3 enthusiasts from all over Nigeria and beyond."
+          size="xs"
+          style={[styles.text,{marginBottom: 10}]}
+        />
+   <Text
+          text="Here, community meets technology for three days of intensive Networking and Learning experiences. Future of money, you deserve to be in the know!"
           size="xs"
           style={styles.text}
         />
@@ -54,15 +59,15 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen() {
           </View>
         </View>
         <View style={styles.eventStats}>
-          <Text text="445+ Speakers" size="xs" weight="bold"  style={styles.textBlack}/>
+          <Text text="61+ Speakers" size="xs" weight="bold"  style={styles.textBlack}/>
           <Icon icon="dot" />
-          <Text text="20+ Sponsors" size="xs" weight="bold"  style={styles.textBlack}/>
+          <Text text="6+ Sponsors" size="xs" weight="bold"  style={styles.textBlack}/>
           <Icon icon="dot" />
           <Text text="21+ Workshops" size="xs" weight="bold"  style={styles.textBlack}/>
         </View>
-        <View style={styles.mapContainer}>
+        {/* <View style={styles.mapContainer}>
         <MapView style={styles.map} />
-        </View>
+        </View> */}
       </View>
     </Screen>
   )
