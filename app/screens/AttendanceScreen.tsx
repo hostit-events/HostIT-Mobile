@@ -16,14 +16,11 @@ export const AttendanceScreen: FC<AttendanceScreenProps> = observer(function Att
   const { AttendeesStore } = useStores()
 
   // Fetch data once when the component mounts
-  useEffect(() => {
     AttendeesStore.fetchTableData()
-  }, [AttendeesStore])
   
   const attendeesDay1 = AttendeesStore.attendeeDayOneData
   const attendeesDay2 = AttendeesStore.attendeeDayTwoData
   const attendeesDay3 = AttendeesStore.attendeeDayThreeData 
-  console.log(attendeesDay1)
   
   const layout = useWindowDimensions()
 

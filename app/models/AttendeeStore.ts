@@ -37,16 +37,16 @@ export const AttendeesStoreModel = types
             return store.filteredDayOneAttendees.length;
         },
         get attendeeDayTwoData() {
-            return store.filteredDayOneAttendees;
+            return store.filteredDayTwoAttendees;
         },
         get attendeeDayTwoCount() {
-            return store.filteredDayOneAttendees.length;
+            return store.filteredDayTwoAttendees.length;
         } ,
         get attendeeDayThreeData() {
-            return store.filteredDayOneAttendees;
+            return store.filteredDayThreeAttendees;
         },
         get attendeeDayThreeCount() {
-            return store.filteredDayOneAttendees.length;
+            return store.filteredDayThreeAttendees.length;
         }
     }))
     .actions((store) => ({
@@ -58,11 +58,9 @@ export const AttendeesStoreModel = types
                     store.attendees = response.data.map((item: any) => AttendeeModel.create(item));
                     store.fetchingStatus = "done";
                 } else {
-                    console.error("Error fetching data:", response.problem);
                     store.fetchingStatus = "error";
                 }
             } catch (error) {
-                console.error("Error:", error);
                 store.fetchingStatus = "error";
             }
         }),
@@ -73,19 +71,19 @@ export const AttendeesStoreModel = types
                 const response = yield api.apisauce.get("api/attendance");
                 if (response.ok && response.data) {
                     const userData = response.data.data;
-                    const filteredDayOneData = userData.filter((user: any) => user.day == 1);
+                    const filteredDayOneData = userData.filter((user: any) => user.day == 0);
                     store.filteredDayOneAttendees = filteredDayOneData.map((obj: { email: any; createdAt: any }, index: number) => [
                         JSON.stringify(index + 1),
                         obj.email,
                         obj.createdAt.slice(11, 19),
                     ]);
-                    const filteredTwoOneData = userData.filter((user: any) => user.day == 2);
+                    const filteredTwoOneData = userData.filter((user: any) => user.day == 1);
                     store.filteredDayTwoAttendees = filteredTwoOneData.map((obj: { email: any; createdAt: any }, index: number) => [
                         JSON.stringify(index + 1),
                         obj.email,
                         obj.createdAt.slice(11, 19),
                     ]);
-                    const filteredDayThreeData = userData.filter((user: any) => user.day == 1);
+                    const filteredDayThreeData = userData.filter((user: any) => user.day == 2);
                     store.filteredDayThreeAttendees = filteredDayThreeData.map((obj: { email: any; createdAt: any }, index: number) => [
                         JSON.stringify(index + 1),
                         obj.email,
@@ -93,11 +91,9 @@ export const AttendeesStoreModel = types
                     ]);
                     store.fetchingStatus = "done";
                 } else {
-                    console.error("Error fetching data:", response.problem);
                     store.fetchingStatus = "error";
                 }
             } catch (error) {
-                console.error("Error:", error);
                 store.fetchingStatus = "error";
             }
         }),

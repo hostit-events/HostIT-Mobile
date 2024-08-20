@@ -20,7 +20,6 @@ import { Picker } from "@react-native-picker/picker"
 
 const markAttendance = async (email: string, day: number) => {
   const response = await api.apisauce.post(`api/attendance/verify`, { email: email, day: day })
-  console.log(response.data)
   return response.data
 }
 
@@ -46,12 +45,10 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
     try {
       setLoading(true)
       const eachUserDetail = attendees.find((item) => item.email === email)
-      console.log(eachUserDetail)
       setScanData(eachUserDetail)
       setShowModal(true)
       setLoading(false)
     } catch (error) {
-      console.error("Failed to parse scanned data:", error)
       setLoading(false)
     }
   }
@@ -64,12 +61,10 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
     try {
       setLoading(true)
       const response = await markAttendance(email, Number(day))
-      console.log(response)
       setLoading(false)
       setShowModal(false)
       showToast(response === null ? "CheckIn Successful" : (response.message === "failed to verify" ? "User Already checked In": response.message))
     } catch (error) {
-      console.error("Failed to parse scanned data:", error)
       setLoading(false)
     }
   }

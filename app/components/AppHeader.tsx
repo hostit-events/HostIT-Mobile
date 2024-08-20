@@ -17,11 +17,9 @@ export interface AppHeaderProps {
  */
 
 const onNamePress =()=>{
-  console.log("go to profile")
 }
 
 const onNotificationPress = () =>{
-  console.log("show notification")
 }
 
 export const AppHeader = observer(function AppHeader(props: AppHeaderProps) {
