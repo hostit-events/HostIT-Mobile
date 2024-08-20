@@ -5,7 +5,6 @@ import { spacing} from "app/theme"
 import { Text } from "app/components/Text"
 import { AppBarChart } from "./AppBarChart"
 import { AnalyticsCard } from "./AnalyticsCard"
-import { AttendanceTable } from "./AttendanceTable"
 
 export interface AttendanceTabProps {
   /**
@@ -29,10 +28,7 @@ export const AttendanceTab = observer(function AttendanceTab(props: AttendanceTa
         <Text text="Tickets" size="lg" weight="semiBold" />
         <AnalyticsCard />
       </View>
-      <View style={styles.container}>
-        <Text text="Live Update" size="lg" weight="semiBold" />
-        <AttendanceTable />
-      </View></>
+      </>
   )
 })
 

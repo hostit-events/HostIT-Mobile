@@ -18,7 +18,9 @@ export const AttendeesStoreModel = types
     .model("AttendeesStore")
     .props({
         attendees: types.optional(types.array(AttendeeModel), []),
-        filteredAttendees: types.optional(types.array(types.array(types.string)), []),
+        filteredDayOneAttendees: types.optional(types.array(types.array(types.string)), []),
+        filteredDayTwoAttendees: types.optional(types.array(types.array(types.string)), []),
+        filteredDayThreeAttendees: types.optional(types.array(types.array(types.string)), []),
         fetchingStatus: types.optional(types.enumeration(["idle", "pending", "done", "error"]), "idle"),
     })
     .views((store) => ({
@@ -28,11 +30,23 @@ export const AttendeesStoreModel = types
         get totalAttendees() {
             return store.attendees.length;
         },
-        get filteredData() {
-            return store.filteredAttendees;
+        get attendeeDayOneData() {
+            return store.filteredDayOneAttendees;
         },
-        get totalFilteredData() {
-            return store.filteredAttendees.length;
+        get attendeeDayOneCount() {
+            return store.filteredDayOneAttendees.length;
+        },
+        get attendeeDayTwoData() {
+            return store.filteredDayOneAttendees;
+        },
+        get attendeeDayTwoCount() {
+            return store.filteredDayOneAttendees.length;
+        } ,
+        get attendeeDayThreeData() {
+            return store.filteredDayOneAttendees;
+        },
+        get attendeeDayThreeCount() {
+            return store.filteredDayOneAttendees.length;
         }
     }))
     .actions((store) => ({
@@ -59,9 +73,20 @@ export const AttendeesStoreModel = types
                 const response = yield api.apisauce.get("api/attendance");
                 if (response.ok && response.data) {
                     const userData = response.data.data;
-                    const today = new Date().toISOString().split("T")[0];
-                    const filteredData = userData.filter((user: any) => user.createdAt.startsWith(today));
-                    store.filteredAttendees = filteredData.map((obj: { email: any; createdAt: any }, index: number) => [
+                    const filteredDayOneData = userData.filter((user: any) => user.day == 1);
+                    store.filteredDayOneAttendees = filteredDayOneData.map((obj: { email: any; createdAt: any }, index: number) => [
+                        JSON.stringify(index + 1),
+                        obj.email,
+                        obj.createdAt.slice(11, 19),
+                    ]);
+                    const filteredTwoOneData = userData.filter((user: any) => user.day == 2);
+                    store.filteredDayTwoAttendees = filteredTwoOneData.map((obj: { email: any; createdAt: any }, index: number) => [
+                        JSON.stringify(index + 1),
+                        obj.email,
+                        obj.createdAt.slice(11, 19),
+                    ]);
+                    const filteredDayThreeData = userData.filter((user: any) => user.day == 1);
+                    store.filteredDayThreeAttendees = filteredDayThreeData.map((obj: { email: any; createdAt: any }, index: number) => [
                         JSON.stringify(index + 1),
                         obj.email,
                         obj.createdAt.slice(11, 19),
@@ -79,7 +104,7 @@ export const AttendeesStoreModel = types
 
         clearAttendees() {
             store.attendees.clear();
-            store.filteredAttendees.clear();
+            store.filteredDayOneAttendees.clear();
             store.fetchingStatus = "idle";
         },
     }))

@@ -1,59 +1,76 @@
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ScrollView, StyleSheet, View, ViewStyle } from "react-native"
+import { StyleSheet, ViewStyle, useWindowDimensions } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
-import { AppCarousel, AppHeader, Screen, Text } from "app/components"
+import { AppCarousel, AppHeader, Screen } from "app/components"
 import { screenContentContainer } from "app/styles/mainStyle"
-import { Row, Table } from "react-native-table-component"
-import { colors, spacing } from "app/theme"
+import { colors } from "app/theme"
 import { useStores } from "app/models"
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
+import { TabBar, TabView } from "react-native-tab-view"
+import CheckInTab from "app/components/CheckInTab"
 
 interface AttendanceScreenProps extends AppStackScreenProps<"Attendance"> {}
 
 export const AttendanceScreen: FC<AttendanceScreenProps> = observer(function AttendanceScreen() {
+  
+  const { AttendeesStore } = useStores()
 
-  const {AttendeesStore} = useStores()
+  // Fetch data once when the component mounts
+  useEffect(() => {
+    AttendeesStore.fetchTableData()
+  }, [AttendeesStore])
+  
+  const attendeesDay1 = AttendeesStore.attendeeDayOneData
+  const attendeesDay2 = AttendeesStore.attendeeDayTwoData
+  const attendeesDay3 = AttendeesStore.attendeeDayThreeData 
+  console.log(attendeesDay1)
+  
+  const layout = useWindowDimensions()
 
-  AttendeesStore.fetchTableData()
+  const [index, setIndex] = useState(0)
+  
+  const [routes] = useState([
+    { key: "Day 1", title: "Day 1" },
+    { key: "Day 2", title: "Day 2" },
+    { key: "Day 3", title: "Day 3" },
+  ])
 
-  const attendees = AttendeesStore.filteredData
+  const renderScene = ({ route }: any) => {
+    switch (route.key) {
+      case "Day 1":
+        return attendeesDay1 ? <CheckInTab attendees={attendeesDay1} /> : null
+      case "Day 2":
+        return attendeesDay2 ? <CheckInTab attendees={attendeesDay2} /> : null
+      case "Day 3":
+        return attendeesDay3 ? <CheckInTab attendees={attendeesDay3} /> : null
+      default:
+        return null
+    } 
+  }
 
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
+  const renderTabBar = (props: any) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: colors.palette.primary }}
+      style={styles.tabBar}
+      activeColor={colors.palette.secondary}
+      inactiveColor={"#708090"}
+      tabStyle={{ width: "auto" }}
+    />
+  )
+
   return (
     <Screen style={$root} preset="scroll" contentContainerStyle={screenContentContainer}>
       <AppHeader pageTitle={false} />
       <AppCarousel />
-      <View style={styles.container}>
-        <Text text="Attendance" size="lg" weight="semiBold" />
-        <ScrollView horizontal={true}>
-          <View>
-            <Table borderStyle={{ borderWidth: 1, borderColor: "#C1C0B9" }}>
-              <Row
-                data={["S/N","Email", "Time In"]}
-                widthArr={[40, 220, 100]}
-                style={styles.header}
-                textStyle={styles.text}
-              />
-            </Table>
-            <ScrollView style={styles.dataWrapper}>
-              <Table borderStyle={{ borderWidth: 1, borderColor: "#C1C0B9" }}>
-                {attendees.map((rowData: any, index: number) => (
-                  <Row
-                    key={index}
-                    data={rowData}
-                    widthArr={[40, 220, 100]}
-                    style={[styles.row, index % 2 && { backgroundColor: "#F7F6E7" }]}
-                    textStyle={styles.rowText}
-                  />
-                ))}
-              </Table>
-            </ScrollView>
-          </View>
-        </ScrollView>
-      </View>
+      <TabView
+        renderTabBar={renderTabBar}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        style={{height: 600}}
+      />
     </Screen>
   )
 })
@@ -63,50 +80,9 @@ const $root: ViewStyle = {
 }
 
 const styles = StyleSheet.create({
-  header: { height: 50, backgroundColor: colors.palette.secondary },
-  text: { paddingLeft: 10, fontWeight: "500", color: "#fff" },
-  dataWrapper: { marginTop: -1 },
-  row: { height: 40, backgroundColor: "#E7E6E1" },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: spacing.md,
-  },
-  rightIcon: {
-    backgroundColor: colors.palette.primary,
-    padding: 3,
-  },
-  field: {
-    backgroundColor: colors.palette.neutral100,
-  },
-  rowText: {
-    paddingLeft: 10,
-    fontWeight: "400",
+  tabBar: {
+    backgroundColor: "transparent",
     color: colors.palette.secondary,
-  },
-  iconContainerStyle: {
-    backgroundColor: colors.palette.primary,
-    padding: 4,
-    paddingHorizontal: 10,
-    marginLeft: -50,
-    borderRadius: 10,
-    zIndex: 10,
-  },
-  containerStyle: {
-    backgroundColor: colors.palette.neutral100,
-  },
-  loaderContainer: {
-    flex: 1,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  textFieldStyle: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  scrollStyle: {
-    height: 450,
+    gap: 20,
   },
 })

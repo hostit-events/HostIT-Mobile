@@ -13,8 +13,7 @@ import { colors, spacing } from "app/theme"
 import { TabView, TabBar } from "react-native-tab-view"
 import ScanFirstTab from "app/components/ScanFirstTab"
 import ScanSecondTab from "app/components/ScanSecondTab"
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "app/models"
+
 
 interface ScanScreenProps extends AppStackScreenProps<"Scan"> {}
 

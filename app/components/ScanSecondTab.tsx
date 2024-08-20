@@ -36,7 +36,7 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
   const [scanData, setScanData] = React.useState<any>(null)
   const [loading, setLoading] = React.useState<Boolean>(false)
   const [userEmail, setUserEmail] = React.useState("")
-  const [day, setDay] = React.useState<number>(0)
+  const [day, setDay] = React.useState<string>("")
 
   const { AttendeesStore } = useStores()
 
@@ -48,7 +48,6 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
       const eachUserDetail = attendees.find((item) => item.email === email)
       console.log(eachUserDetail)
       setScanData(eachUserDetail)
-      console.log(scanData)
       setShowModal(true)
       setLoading(false)
     } catch (error) {
@@ -61,14 +60,14 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
     ToastAndroid.show(message, ToastAndroid.SHORT)
   }
 
-  const handleMarkAttendance = async (email: any) => {
+  const handleMarkAttendance = async (email: any, day: number) => {
     try {
       setLoading(true)
-      const response = await markAttendance(email, day)
+      const response = await markAttendance(email, Number(day))
       console.log(response)
       setLoading(false)
       setShowModal(false)
-      showToast(response.message)
+      showToast(response === null ? "CheckIn Successful" : (response.message === "failed to verify" ? "User Already checked In": response.message))
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
       setLoading(false)
@@ -100,11 +99,10 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
           borderRadius: 10,
         }}
         onValueChange={(itemValue, itemIndex) => setDay(itemValue)}
-        aria-label="Day"
-      >
-        <Picker.Item label="Day 1" value={0} />
-        <Picker.Item label="Day 2" value={1} />
-        <Picker.Item label="Day 3" value={2} />
+        >
+          <Picker.Item label="Day 1" value={"0"} />
+          <Picker.Item label="Day 2" value={"1"} />
+          <Picker.Item label="Day 3" value={"2"} />
       </Picker>
       <View style={styles.textFieldStyle}>
         <TextField
@@ -160,6 +158,7 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
         setShowModal={setShowModal}
         scanData={scanData}
         handleMarkAttendance={handleMarkAttendance}
+        day={day}
       />
     </>
   )

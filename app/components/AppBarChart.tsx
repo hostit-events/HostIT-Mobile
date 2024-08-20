@@ -77,7 +77,9 @@ export const AppBarChart = observer(function AppBarChart(props: AppBarChartProps
   const { AttendeesStore} = useStores()
 
   const totalAttendees = AttendeesStore.totalAttendees
-  const checkIns = AttendeesStore.totalFilteredData
+  const checkInsDay1 = AttendeesStore.attendeeDayOneCount
+  const checkInsDay2 = AttendeesStore.attendeeDayOneCount
+  const checkInsDay3 = AttendeesStore.attendeeDayOneCount
   const barData = [
     {
       value: totalAttendees,
@@ -87,7 +89,7 @@ export const AppBarChart = observer(function AppBarChart(props: AppBarChartProps
       labelTextStyle: {color: 'gray'},
       frontColor: '#6ce5e8',
     },
-    {value: checkIns, frontColor: '#41b8d5'},
+    {value: checkInsDay1, frontColor: '#41b8d5'},
     {
       value: totalAttendees,
       label: 'Day 2',
@@ -96,7 +98,7 @@ export const AppBarChart = observer(function AppBarChart(props: AppBarChartProps
       labelTextStyle: {color: 'gray'},
       frontColor: '#6ce5e8',
     },
-    {value: 0, frontColor: '#41b8d5'},
+    {value: checkInsDay2, frontColor: '#41b8d5'},
     {
       value: totalAttendees,
       label: 'Day 3',
@@ -105,7 +107,7 @@ export const AppBarChart = observer(function AppBarChart(props: AppBarChartProps
       labelTextStyle: {color: 'gray'},
       frontColor: '#6ce5e8',
     },
-    {value: 0, frontColor: '#41b8d5'},
+    {value: checkInsDay3, frontColor: '#41b8d5'},
   ]
   return (
     <View

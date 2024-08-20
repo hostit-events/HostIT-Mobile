@@ -15,13 +15,13 @@ export interface AttendanceModalProps {
   style?: StyleProp<ViewStyle>
   userDetails: any
   handleMarkAttendance: any
-}
+  day: any}
 
 /**
  * Describe your component here
  */
 export const AttendanceModal = observer(function AttendanceModal(props: AttendanceModalProps) {
-  const { style, userDetails, handleMarkAttendance } = props
+  const { style, userDetails, handleMarkAttendance, day  } = props
   const $styles = [$container, style]
 
   return (
@@ -66,7 +66,7 @@ export const AttendanceModal = observer(function AttendanceModal(props: Attendan
             text="Checkin"
             textStyle={styles.buttonText}
             style={styles.nextButton}
-            onPress={()=>handleMarkAttendance(userDetails.email)}
+            onPress={()=>handleMarkAttendance(userDetails.email, day)}
           />
         </View>
       </View>

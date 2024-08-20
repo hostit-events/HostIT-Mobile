@@ -14,13 +14,14 @@ export interface ScanModalProps {
   style?: StyleProp<ViewStyle>
   scanData: any
   handleMarkAttendance: any
+  day: any 
 }
 
 /**
  * Describe your component here
  */
 export const ScanModal = observer(function ScanModal(props: ScanModalProps) {
-  const { showModal, setShowModal, scanData, handleMarkAttendance } = props
+  const { showModal, setShowModal, scanData, handleMarkAttendance, day } = props
 
   return (
     <Modal
@@ -32,7 +33,7 @@ export const ScanModal = observer(function ScanModal(props: ScanModalProps) {
     >
       <View style={styles.overlay}>
         <View style={styles.container}>
-          {scanData ? <AttendanceModal userDetails={scanData} handleMarkAttendance={handleMarkAttendance} /> : <NotAttendanceModal setShowModal={setShowModal}/>}
+          {scanData ? <AttendanceModal userDetails={scanData} handleMarkAttendance={handleMarkAttendance} day={day} /> : <NotAttendanceModal setShowModal={setShowModal}/>}
         </View>
       </View>
     </Modal>

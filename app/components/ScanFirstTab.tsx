@@ -41,7 +41,7 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
   const [scanData, setScanData] = React.useState<any>(null)
   const [facing, setFacing] = React.useState<CameraType>("back")
   const [loading, setLoading] = React.useState<Boolean>(false)
-  const [day, setDay] = React.useState<number>(0)
+  const [day, setDay] = React.useState<string>("")
 
   const { AttendeesStore } = useStores()
 
@@ -70,14 +70,15 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
     ToastAndroid.show(message, ToastAndroid.SHORT)
   }
 
-  const handleMarkAttendance = async (email: any) => {
+
+  const handleMarkAttendance = async (email: any, day: number) => {
     try {
       setLoading(true)
-      const response = await markAttendance(email, day)
+      const response = await markAttendance(email, Number(day))
+      console.log(response)
       setLoading(false)
       setShowModal(false)
-      setScanData(null)
-      showToast(response.message)
+      showToast(response === null ? "CheckIn Successful" : (response.message === "failed to verify" ? "User Already checked In": response.message))
     } catch (error) {
       console.error("Failed to parse scanned data:", error)
       setLoading(false)
@@ -131,11 +132,10 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
             borderRadius: 10,
           }}
           onValueChange={(itemValue, itemIndex) => setDay(itemValue)}
-          aria-label="Day"
         >
-          <Picker.Item label="Day 1" value={0} />
-          <Picker.Item label="Day 2" value={1} />
-          <Picker.Item label="Day 3" value={2} />
+          <Picker.Item label="Day 1" value={"0"} />
+          <Picker.Item label="Day 2" value={"1"} />
+          <Picker.Item label="Day 3" value={"2"} />
         </Picker>
         <CameraView
           style={styles.camera}
@@ -158,6 +158,7 @@ const ScanFirstTab = observer(function ScanFirstTab(props: ScanFirstTabProps) {
         </View>
       </View>
       <ScanModal
+      day={day}
         showModal={showModal}
         setShowModal={setShowModal}
         scanData={scanData}
