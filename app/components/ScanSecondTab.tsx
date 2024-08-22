@@ -44,7 +44,12 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
   const handleGetUserDetails = async (email: string) => {
     try {
       setLoading(true)
-      const eachUserDetail = attendees.find((item) => item.email === email)
+      const eachUserDetail = attendees.find(
+        (item) =>
+          item.name.toLowerCase().includes(email.trim().toLowerCase()) ||
+          item.email.toLowerCase().includes(email.trim().toLowerCase())||
+          item.phone.toLowerCase().includes(email.trim().toLowerCase()),
+      )
       setScanData(eachUserDetail)
       setShowModal(true)
       setLoading(false)
@@ -63,7 +68,13 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
       const response = await markAttendance(email, Number(day))
       setLoading(false)
       setShowModal(false)
-      showToast(response === null ? "CheckIn Successful" : (response.message === "failed to verify" ? "User Already checked In": response.message))
+      showToast(
+        response === null
+          ? "CheckIn Successful"
+          : response.message === "failed to verify"
+          ? "User Already checked In"
+          : response.message,
+      )
     } catch (error) {
       setLoading(false)
     }
@@ -94,10 +105,10 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
           borderRadius: 10,
         }}
         onValueChange={(itemValue, itemIndex) => setDay(itemValue)}
-        >
-          <Picker.Item label="Day 1" value={"0"} />
-          <Picker.Item label="Day 2" value={"1"} />
-          <Picker.Item label="Day 3" value={"2"} />
+      >
+        <Picker.Item label="Day 1" value={"0"} />
+        <Picker.Item label="Day 2" value={"1"} />
+        <Picker.Item label="Day 3" value={"2"} />
       </Picker>
       <View style={styles.textFieldStyle}>
         <TextField
@@ -121,33 +132,6 @@ const ScanSecondTab = observer(function ScanSecondTab(props: ScanSecondTabProps)
         </TouchableOpacity>
       </View>
 
-      {/* <View style={styles.container}>
-        <ScrollView horizontal={true}>
-          <View >
-            <Table borderStyle={{ borderWidth: 1, borderColor: "#C1C0B9" }}  >
-              <Row
-                data={tableHead}
-                widthArr={widthArr}
-                style={styles.header}
-                textStyle={styles.text}
-              />
-            </Table>
-            <ScrollView style={styles.dataWrapper}>
-              <Table borderStyle={{ borderWidth: 1, borderColor: "#C1C0B9" }}>
-                {tableData.map((rowData, index) => (
-                  <Row
-                    key={index}
-                    data={rowData}
-                    widthArr={widthArr}
-                    style={[styles.row, index % 2 && { backgroundColor: "#F7F6E7" }]}
-                    textStyle={styles.rowText}
-                  />
-                ))}
-              </Table>
-            </ScrollView>
-          </View>
-        </ScrollView>
-      </View> */}
       <ScanModal
         showModal={showModal}
         setShowModal={setShowModal}
